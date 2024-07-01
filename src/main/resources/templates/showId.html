@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Employee</title>
+</head>
+<body>
+<p th:text = "${'Name: ' + employee.getName()}">VALUE</p>
+<p th:text = "${'Surname: ' + employee.getSurname()}">VALUE</p>
+<p th:text = "${'Department: ' + employee.getDepartment()}">VALUE</p>
+<p th:text = "${'Salary: ' + employee.getSalary()}">VALUE</p>
+
+<form th:method="GET" th:action="@{/employee/{id}/edit(id=${employee.getId()})}">
+    <input type="submit" value="Edit"/>
+    <input type="hidden" name="id" th:value="${employee.getId()}"/>
+</form>
+
+<form th:method="POST" th:action="@{/employee/{id}(id=${employee.getId()})}">
+    <input type="submit" value="Delete"/>
+    <input type="hidden" name="id" th:value="${employee.getId()}"/>
+</form>
+
+</form>
+</body>
+</html>
