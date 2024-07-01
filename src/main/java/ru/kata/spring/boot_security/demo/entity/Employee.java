@@ -2,6 +2,7 @@ package ru.kata.spring.boot_security.demo.entity;
 
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.CascadeType;
@@ -15,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -22,7 +24,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "users")
-public class Employee  {
+public class Employee implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -49,18 +52,9 @@ public class Employee  {
                 inverseJoinColumns = @JoinColumn(name = "role_id")
                 )
 
-    private Set<Role> roles = new HashSet<>();
+    private Set<Role> roles;
 
     public Employee() {
-    }
-
-    public Employee(int id, String name, String surname, String department, int salary, Set<Role> roles) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.department = department;
-        this.salary = salary;
-        this.roles = roles;
     }
 
     public int getId() {
@@ -81,10 +75,6 @@ public class Employee  {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     public String getSurname() {
@@ -118,5 +108,45 @@ public class Employee  {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        Set<Role> roles = getRoles();
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        for (Role role : roles) {
+            authorities.add(new SimpleGrantedAuthority(role.getName()));
+        }
+        return authorities;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return getName();
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
 
 }

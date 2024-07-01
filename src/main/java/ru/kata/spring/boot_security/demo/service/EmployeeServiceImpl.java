@@ -1,4 +1,4 @@
-package ru.kata.spring.boot_security.demo;
+package ru.kata.spring.boot_security.demo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,6 +11,7 @@ import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -24,27 +25,28 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<Employee> showAllEmployee() {
-        return List.of();
+        return employeeRepository.findAll();
     }
 
     @Override
     public Employee getEmployeeById(int id) {
-        return null;
+        Optional<Employee> employee = employeeRepository.findById(id);
+        return employee.orElse(new Employee());
     }
 
     @Override
     public void save(Employee employee) {
-
+        employeeRepository.save(employee);
     }
 
     @Override
     public void update(int id, Employee employee) {
-
+        em.merge(employee);
     }
 
     @Override
     public void delete(int id) {
-
+        employeeRepository.deleteById(id);
     }
 
     @Override
