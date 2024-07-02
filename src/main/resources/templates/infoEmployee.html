@@ -6,8 +6,8 @@
 </head>
 <body>
 
-<div th:each = "employee : ${employee}">
-    <form th:method="GET" th:action="@{/employee/{id}(id=${employee.getId()})}">
+<div th:each="employee : ${employee}">
+    <form th:method="GET" th:action="@{/admin/{id}(id=${employee.getId()})}">
         <input type="submit" th:value="${employee.getName() + ', ' + employee.getDepartment()}"/>
         <input type="hidden" name="id" th:value="${employee.getId()}"/>
     </form>
@@ -16,7 +16,11 @@
 
 <br/>
 <hr/>
-<a href="employee/new">Create new employee</a>
+<a href="admin/new">Create new employee</a>
+<br/>
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign Out"/>
+</form>
 
 </body>
 </html>

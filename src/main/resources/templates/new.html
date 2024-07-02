@@ -6,24 +6,33 @@
 </head>
 <body>
 
-<form th:method="POST" th:action="@{/employee}" th:object="${employee}">
-    <label for = "name" > Enter name: </label>
+<form th:method="POST" th:action="@{/admin}" th:object="${employee}">
+    <label for="name"> Enter name: </label>
     <input type="text" th:field="*{name}" id="name">
     <br>
     <br>
-    <label for = "surname" > Enter surname: </label>
+    <label for="password"> Enter password: </label>
+    <input type="text" th:field="*{password}" id="password">
+    <br>
+    <br>
+    <label for="surname"> Enter surname: </label>
     <input type="text" th:field="*{surname}" id="surname">
     <br>
     <br>
-    <label for = "department" > Enter department: </label>
+    <label for="department"> Enter department: </label>
     <input type="text" th:field="*{department}" id="department">
     <br>
     <br>
-    <label for = "salary" > Enter salary: </label>
+    <label for="salary"> Enter salary: </label>
     <input type="text" th:field="*{salary}" id="salary">
+
 
     <br/>
     <input type="submit" value="Create"/>
+</form>
+<br/>
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign Out"/>
 </form>
 
 </body>
