@@ -24,7 +24,7 @@ public class UserController {
 
 
     @GetMapping()
-    public String dashboardPageList(Model model, @AuthenticationPrincipal UserDetails currentUser ) {
+    public String dashboardPageList(Model model, @AuthenticationPrincipal UserDetails currentUser) {
         Employee employee = (Employee) employeeRepository.getUserByUsername(currentUser.getUsername());
         model.addAttribute("currentEmployee", employee);
 
