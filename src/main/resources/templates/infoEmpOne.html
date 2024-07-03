@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+</head>
+<h1 th:inline="text"> Information about employee - [[${#httpServletRequest.remoteUser}]]!</h1>
+<body>
+<br/>
+
+<div>
+    <label>Id:</label>
+    <span th:text="${currentEmployee.getId()}"/>
+    <br>
+    <label>Name:</label>
+    <span th:text="${currentEmployee.getName()}"/>
+    <br>
+    <label>Surname:</label>
+    <span th:text="${currentEmployee.getSurname()}"/>
+    <br>
+    <label>Roles:</label>
+    <span sec:authentication="principal.authorities">Roles</span>
+    <br>
+    <label>Department:</label>
+    <span th:text="${currentEmployee.getDepartment()}"/>
+    <br>
+    <label>Salary:</label>
+    <span th:text="${currentEmployee.getSalary()}"/>
+</div>
+
+<br/>
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign Out"/>
+</form>
+
+</body>
+</html>
