@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -55,6 +56,14 @@ public class Employee implements UserDetails {
     private Set<Role> roles;
 
     public Employee() {
+    }
+
+    public Employee( String name, String password, String surname, String department, int salary) {
+        this.name = name;
+        this.password = password;
+        this.surname = surname;
+        this.department = department;
+        this.salary = salary;
     }
 
     public int getId() {
@@ -148,5 +157,16 @@ public class Employee implements UserDetails {
         return true;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Employee employee = (Employee) o;
+        return id == employee.id && salary == employee.salary && Objects.equals(name, employee.name) && Objects.equals(password, employee.password) && Objects.equals(surname, employee.surname) && Objects.equals(department, employee.department) && Objects.equals(roles, employee.roles);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, password, surname, department, salary, roles);
+    }
 }
