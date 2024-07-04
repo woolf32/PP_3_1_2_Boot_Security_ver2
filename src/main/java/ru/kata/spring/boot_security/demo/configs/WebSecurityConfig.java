@@ -30,10 +30,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         this.userDetailsImpl = userDetailsImpl;
         this.successUserHandler = successUserHandler;
     }
-   /* @Bean
-    public UserDetailsService userDetailsService() {
-        return new UserDetailsImpl();
-    }*/
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

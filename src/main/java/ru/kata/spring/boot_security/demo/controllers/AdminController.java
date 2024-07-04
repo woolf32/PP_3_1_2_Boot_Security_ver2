@@ -13,7 +13,6 @@ import ru.kata.spring.boot_security.demo.entity.Employee;
 import ru.kata.spring.boot_security.demo.service.EmployeeService;
 
 
-
 @Controller
 @RequestMapping("/admin")
 public class AdminController {

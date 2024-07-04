@@ -26,7 +26,7 @@ public class DataInitializer implements ApplicationRunner {
     @Transactional
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        Employee emp = new Employee("username","$2a$12$kOOeRbQOtru9WawUDBCe6e5UgnVmMSgR71blRAqkVi5JCopjSLqhy","surname","IT",221);
+        Employee emp = new Employee("username", "$2a$12$kOOeRbQOtru9WawUDBCe6e5UgnVmMSgR71blRAqkVi5JCopjSLqhy", "surname", "IT", 221);
         employeeRepository.save(emp);
         em.createNativeQuery("INSERT INTO roles (role_id,name) values (1,'ADMIN')").executeUpdate();
         em.createNativeQuery("INSERT INTO users_roles (user_id,role_id) values (1,1)").executeUpdate();
