@@ -24,33 +24,42 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Autowired
     RoleRepository roleRepository;
 
+
+    public EmployeeServiceImpl() {
+    }
+
+    @Transactional
     @Override
     public List<Employee> showAllEmployee() {
         return employeeRepository.findAll();
     }
 
+    @Transactional
     @Override
     public Employee getEmployeeById(int id) {
         Optional<Employee> employee = employeeRepository.findById(id);
         return employee.orElse(new Employee());
     }
 
+    @Transactional
     @Override
     public void save(Employee employee) {
         employeeRepository.save(employee);
     }
 
+    @Transactional
     @Override
     public void update(int id, Employee employee) {
         em.merge(employee);
     }
 
+    @Transactional
     @Override
     public void delete(int id) {
         employeeRepository.deleteById(id);
     }
 
-
+    @Transactional
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Employee user = employeeRepository.getUserByUsername(username);
@@ -61,4 +70,5 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         return user;
     }
+
 }
