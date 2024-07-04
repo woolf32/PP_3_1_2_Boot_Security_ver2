@@ -10,25 +10,29 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.kata.spring.boot_security.demo.entity.Employee;
-import ru.kata.spring.boot_security.demo.service.EmployeeServiceImpl;
+import ru.kata.spring.boot_security.demo.service.EmployeeService;
+
 
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
 
-    @Autowired
-    private EmployeeServiceImpl employeeserviceimpl;
+    private EmployeeService employeeService;
+
+    public AdminController(ru.kata.spring.boot_security.demo.service.EmployeeService employeeService) {
+        this.employeeService = employeeService;
+    }
 
     @GetMapping()
     public String showAllEmployee(Model model) {
-        model.addAttribute("employee", employeeserviceimpl.showAllEmployee());
+        model.addAttribute("employee", employeeService.showAllEmployee());
         return "infoEmployee";
     }
 
     @GetMapping("/{id}")
     public String getEmployeeById(@RequestParam("id") int id, Model model) {
-        model.addAttribute("employee", employeeserviceimpl.getEmployeeById(id));
+        model.addAttribute("employee", employeeService.getEmployeeById(id));
         return "showId";
     }
 
@@ -40,25 +44,25 @@ public class AdminController {
 
     @PostMapping()
     public String create(@ModelAttribute("employee") Employee employee) {
-        employeeserviceimpl.save(employee);
+        employeeService.save(employee);
         return "redirect:/admin";
     }
 
     @GetMapping("/{id}/edit")
     public String editEmployee(Model model, @RequestParam("id") int id) {
-        model.addAttribute("employee", employeeserviceimpl.getEmployeeById(id));
+        model.addAttribute("employee", employeeService.getEmployeeById(id));
         return "/edit";
     }
 
     @PatchMapping("/{id}")
     public String update(@ModelAttribute("employee") Employee employee, @RequestParam("id") int id) {
-        employeeserviceimpl.update(id, employee);
+        employeeService.update(id, employee);
         return "redirect:/admin";
     }
 
     @PostMapping("/{id}")
     public String delete(@RequestParam("id") int id) {
-        employeeserviceimpl.delete(id);
+        employeeService.delete(id);
         return "redirect:/admin";
     }
 }
