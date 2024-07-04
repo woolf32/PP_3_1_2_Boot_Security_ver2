@@ -6,7 +6,7 @@ import ru.kata.spring.boot_security.demo.entity.Employee;
 
 import java.util.List;
 
-public interface EmployeeService extends UserDetailsService {
+public interface EmployeeService {
     List<Employee> showAllEmployee();
 
     Employee getEmployeeById(int id);
