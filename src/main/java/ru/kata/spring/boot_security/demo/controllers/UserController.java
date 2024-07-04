@@ -17,9 +17,6 @@ import ru.kata.spring.boot_security.demo.service.EmployeeServiceImpl;
 public class UserController {
 
     @Autowired
-    private EmployeeServiceImpl employeeserviceimpl;
-
-    @Autowired
     EmployeeRepository employeeRepository;
 
 
