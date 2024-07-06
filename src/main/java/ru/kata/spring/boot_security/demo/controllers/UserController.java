@@ -9,20 +9,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.kata.spring.boot_security.demo.entity.Employee;
 import ru.kata.spring.boot_security.demo.repository.EmployeeRepository;
-import ru.kata.spring.boot_security.demo.repository.RoleRepository;
-import ru.kata.spring.boot_security.demo.service.EmployeeServiceImpl;
+
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
 
-    @Autowired
     EmployeeRepository employeeRepository;
+
+    public UserController(EmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
+    }
 
 
     @GetMapping()
     public String dashboardPageList(Model model, @AuthenticationPrincipal UserDetails currentUser) {
-        Employee employee = (Employee) employeeRepository.getUserByUsername(currentUser.getUsername());
+        Employee employee = employeeRepository.getUserByUsername(currentUser.getUsername());
         model.addAttribute("currentEmployee", employee);
 
         return "infoEmpOne";
