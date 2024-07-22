@@ -58,7 +58,7 @@ public class Employee implements UserDetails {
     public Employee() {
     }
 
-    public Employee(String name, String password, String surname, String department, int salary) {
+    public Employee(String name, String password, String surname, String department, int salary  ) {
         this.name = name;
         this.password = password;
         this.surname = surname;

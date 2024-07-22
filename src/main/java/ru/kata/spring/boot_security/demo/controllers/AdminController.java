@@ -9,7 +9,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.kata.spring.boot_security.demo.entity.Employee;
+import ru.kata.spring.boot_security.demo.entity.Role;
+import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 import ru.kata.spring.boot_security.demo.service.EmployeeService;
+
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @Controller
@@ -17,21 +23,29 @@ import ru.kata.spring.boot_security.demo.service.EmployeeService;
 public class AdminController {
 
     private final EmployeeService employeeService;
+    private final RoleRepository roleRepository;
 
-    public AdminController(ru.kata.spring.boot_security.demo.service.EmployeeService employeeService) {
+
+    public AdminController(ru.kata.spring.boot_security.demo.service.EmployeeService employeeService, RoleRepository roleRepository) {
         this.employeeService = employeeService;
+        this.roleRepository = roleRepository;
     }
 
     @GetMapping()
     public String showAllEmployee(Model model) {
-        model.addAttribute("employee", employeeService.showAllEmployee());
-        return "infoEmployee";
+        List<Employee> employees = employeeService.showAllEmployee();
+        if (employees.isEmpty()) {
+            System.out.println("EMPTY");
+        }
+        model.addAttribute("employees", employeeService.showAllEmployee());
+        return "inf";
     }
 
     @GetMapping("/{id}")
     public String getEmployeeById(@RequestParam("id") int id, Model model) {
         model.addAttribute("employee", employeeService.getEmployeeById(id));
-        return "showId";
+        return "inf";
+        /*return "showId";*/
     }
 
     @GetMapping("/new")
@@ -53,7 +67,12 @@ public class AdminController {
     }
 
     @PatchMapping("/{id}")
-    public String update(@ModelAttribute("employee") Employee employee, @RequestParam("id") int id) {
+    public String update(@ModelAttribute("employee") Employee employee, @RequestParam("id") int id,
+                         @RequestParam List<String> listRoles) {
+        Set<Role> roles = listRoles.stream()
+                .map(roleName -> roleRepository.findByName(roleName))
+                .collect(Collectors.toSet());
+        employee.setRoles(roles);
         employeeService.update(id, employee);
         return "redirect:/admin";
     }

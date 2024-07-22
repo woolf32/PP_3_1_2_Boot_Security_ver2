@@ -7,8 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 
 @Entity
@@ -19,6 +22,7 @@ public class Role implements GrantedAuthority {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Column(name = "name")
     private String name;
 
     public int getId() {
@@ -33,6 +37,9 @@ public class Role implements GrantedAuthority {
         return name;
     }
 
+    @ManyToMany(mappedBy = "roles")
+    private Set<Employee> employees = new HashSet<>();
+
     public void setName(String name) {
         this.name = name;
     }
@@ -46,6 +53,9 @@ public class Role implements GrantedAuthority {
 
     public Role(int id, String name) {
         this.id = id;
+        this.name = name;
+    }
+    public Role( String name) {
         this.name = name;
     }
 

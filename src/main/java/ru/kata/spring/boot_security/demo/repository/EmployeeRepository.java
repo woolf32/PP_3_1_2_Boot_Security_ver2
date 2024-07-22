@@ -10,4 +10,6 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 
     @Query("select u from Employee u left join fetch u.roles where u.name=:username")
     Employee getUserByUsername(@Param("username") String username);
+
+
 }
