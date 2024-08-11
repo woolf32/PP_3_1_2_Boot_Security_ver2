@@ -31,15 +31,15 @@ public class DataInitializer implements ApplicationRunner {
         Employee emp4 = new Employee("username4", "$2a$12$qiTnZ1zJaqNRwY.JboPh.eh/9Om9YEqvyJsEcQbWlP2gHl8xSFcMm", "surname4", "WQ", 234);
         employeeRepository.save(emp1);
         employeeRepository.save(emp2);
-        employeeRepository.save(emp3);
-        employeeRepository.save(emp4);
+        /*employeeRepository.save(emp3);
+        employeeRepository.save(emp4);*/
         em.createNativeQuery("INSERT INTO roles (role_id,name) values (1,'ADMIN')").executeUpdate();
         em.createNativeQuery("INSERT INTO roles (role_id,name) values (2,'USER')").executeUpdate();
         em.createNativeQuery("INSERT INTO users_roles (user_id,role_id) values (1,1)").executeUpdate();
         em.createNativeQuery("INSERT INTO users_roles (user_id,role_id) values (1,2)").executeUpdate();
         em.createNativeQuery("INSERT INTO users_roles (user_id,role_id) values (2,2)").executeUpdate();
-        em.createNativeQuery("INSERT INTO users_roles (user_id,role_id) values (3,2)").executeUpdate();
-        em.createNativeQuery("INSERT INTO users_roles (user_id,role_id) values (4,2)").executeUpdate();
+        /*em.createNativeQuery("INSERT INTO users_roles (user_id,role_id) values (3,2)").executeUpdate();
+        em.createNativeQuery("INSERT INTO users_roles (user_id,role_id) values (4,2)").executeUpdate();*/
 
     }
 }

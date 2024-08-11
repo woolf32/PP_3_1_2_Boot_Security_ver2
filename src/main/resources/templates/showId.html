@@ -11,7 +11,7 @@
 <p th:text="${'Department: ' + employee.getDepartment()}">VALUE</p>
 <p th:text="${'Salary: ' + employee.getSalary()}">VALUE</p>
 
-<form th:method="GET" th:action="@{/admin/{id}/edit(id=${employee.getId()})}">
+<form th:method="GET" th:action="@{/admin/edit(id=${employee.getId()})}">
     <input type="submit" value="Edit"/>
     <input type="hidden" name="id" th:value="${employee.getId()}"/>
 </form>

@@ -5,7 +5,7 @@
     <title>Edit information Employee</title>
 </head>
 <body>
-<form th:method="PATCH" th:action="@{/admin/{id}(id=${employee.getId()})}" th:object="${employee}">
+<form th:method="POST" th:action="@{/admin/edit(id=${employee.getId()})}" th:object="${employee}">
     <label for="name"> Enter name: </label>
     <input type="text" th:field="*{name}" id="name">
     <br>
@@ -20,14 +20,24 @@
     <br>
     <label for="salary"> Enter salary: </label>
     <input type="text" th:field="*{salary}" id="salary">
-
-    <br/>
+    <br>
+    <br>
+    <label for="password"> Enter password: </label>
+    <input type="text" th:field="*{password}" id="password">
+    <br>
+    <br>
+    <input type="hidden" name="selectedRoles" value=""/>
+    <div th:each="role : ${allRoles}">
+        <input type="checkbox" th:text="${role.getAuthority()}" th:value="${role.getId()}" th:id="'role_' + ${role}" name="selectedRoles"/>
+        <label th:for="'role_' + ${role}" ></label><br/>
+    </div>
     <input type="submit" value="Update"/>
+    <input type="hidden" name="id" th:value="${employee.getId()}"/>
 </form>
 
 <br/>
 
-<form th:action="@{/logout}" method="post">
+<form th:action="@{/logout}" method="PATCH">
     <input type="submit" value="Sign Out"/>
 </form>
 

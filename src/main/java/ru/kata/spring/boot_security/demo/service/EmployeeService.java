@@ -11,11 +11,9 @@ public interface EmployeeService {
 
     Employee getEmployeeById(int id);
 
-    void save(Employee employee);
+    void save(Employee employee, List <Integer> selectedRoles);
 
-    void update(int id, Employee employee);
+    void update(int id, Employee employee, List <Integer> selectedRoles);
 
     void delete(int id);
-
-    void updateRoles(int id, Employee updatedEmployee);
 }
