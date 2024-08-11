@@ -34,7 +34,7 @@ public class AdminController {
         model.addAttribute("employee", employee);
         model.addAttribute("employeeList", employeeService.showAllEmployee());
         model.addAttribute("roles", roleService.findAll());
-        return "mainPage";
+        return "mainPageNewStyle";
     }
 
     @GetMapping("/{id}")

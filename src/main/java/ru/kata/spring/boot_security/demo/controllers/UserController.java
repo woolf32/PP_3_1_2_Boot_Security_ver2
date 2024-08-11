@@ -27,7 +27,7 @@ public class UserController {
         Employee employee = employeeRepository.getUserByUsername(currentUser.getUsername());
         model.addAttribute("currentEmployee", employee);
 
-        return "infoEmpOne";
+        return "infoEmpOneNewStyle";
     }
 
 }
