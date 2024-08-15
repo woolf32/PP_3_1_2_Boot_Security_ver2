@@ -173,23 +173,19 @@
 
                                                                             </div>
 
-                                                                            <div class="mb-3">
-                                                                                <label for="role">Role</label>
-                                                                                <select class="form-control" id="role"
-                                                                                        th:name="selectedRoles"
-                                                                                        th:if="${employee != null}"
-                                                                                        th:value="${employee.getAuthorities()}">
-                                                                                    <option th:each="role : ${roles}"
-                                                                                            th:value="${role.getId()}"
-                                                                                            th:text="${role.name}">Role
-                                                                                    </option>
-                                                                                </select>
+                                                                            <form th:action="@{/admin/edit}" th:object="${employee}" method="post">
+                                                                                <input type="hidden" th:field="*{id}" />
+                                                                                <!-- Other fields -->
+                                                                                <div th:each="role : ${roles}">
+                                                                                    <input type="checkbox" th:field="*{roles}" th:value="${role.id}" />
+                                                                                    <label th:text="${role.name}"></label>
+                                                                                </div>
 
-                                                                            </div>
+                                                                            </form>
 
                                                                             <div class="modal-footer">
-                                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
                                                                                 <button type="submit" th:attr="form='editUserForm' + ${employee.getId()}" class="btn btn-primary">Сохранить изменения</button>
+                                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
                                                                             </div>
 
                                                                         </form>
@@ -314,18 +310,15 @@
                                             <input type="text" class="form-control" id="NewSalary" placeholder="Salary"
                                                    th:name="salary">
                                             <br>
-                                            <div class="form-group">
-                                                <label><strong>Role</strong></label>
-                                                <div th:each="role : ${roles}">
-                                                    <input type="checkbox" th:text="${role.getAuthority()}" th:value="${role.getId()}" th:id="'role_' + ${role}" name="selectedRoles"/>
-                                                    <label th:for="'role_' + ${role}"></label><br/>
-                                                </div>
+                                            <form th:action="@{/admin/new}" th:object="${employee}" method="post">
 
-                                            </div>
-                                            <br>
-                                            <div>
+                                                <div th:each="role : ${roles}">
+                                                    <input type="checkbox" th:field="*{roles}" th:value="${role.id}" />
+                                                    <label th:text="${role.name}"></label>
+                                                </div>
                                                 <button type="submit" class="btn btn-success">Add new user</button>
-                                            </div>
+                                            </form>
+                                            <br>
                                         </form>
                                     </div>
                                 </div>
