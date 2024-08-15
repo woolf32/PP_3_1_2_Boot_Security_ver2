@@ -13,9 +13,6 @@ import ru.kata.spring.boot_security.demo.entity.Employee;
 import ru.kata.spring.boot_security.demo.service.EmployeeService;
 import ru.kata.spring.boot_security.demo.service.RoleService;
 
-import java.util.List;
-
-
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
@@ -51,14 +48,15 @@ public class AdminController {
     }
 
     @PostMapping("/new")
-    public String create(@ModelAttribute("employee") Employee employee, BindingResult bindingResult,
-                         @RequestParam ("selectedRoles") List <Integer> selectedRoles) {
+    public String create(@ModelAttribute("employee") Employee employee, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "new";
         }
-        employeeService.save(employee,selectedRoles);
+        employeeService.save(employee);
         return "redirect:/admin";
     }
+
+
 
     @GetMapping("/edit")
     public String editEmployee(Model model, @RequestParam("id") int id) {
@@ -68,12 +66,11 @@ public class AdminController {
     }
 
     @PostMapping("/edit")
-    public String update(@ModelAttribute("employee") Employee employee, BindingResult bindingResult,
-                         @RequestParam("id") int id, @RequestParam ("selectedRoles") List <Integer> selectedRoles) {
+    public String update(@ModelAttribute("employee") Employee employee, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "edit";
         }
-        employeeService.update(id, employee, selectedRoles);
+        employeeService.update(employee);
         return "redirect:/admin";
     }
 
