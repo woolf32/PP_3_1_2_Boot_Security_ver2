@@ -7,6 +7,7 @@ import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 
 import javax.persistence.CascadeType;
@@ -174,5 +175,14 @@ public class Employee implements UserDetails {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, password, surname, department, salary, roles);
+    }
+
+    public void updateFrom(Employee employee, BCryptPasswordEncoder encoder) {
+        this.name = employee.getName();
+        this.surname = employee.getSurname();
+        this.department = employee.getDepartment();
+        this.salary = employee.getSalary();
+        this.password = employee.getPassword();
+
     }
 }
