@@ -177,12 +177,4 @@ public class Employee implements UserDetails {
         return Objects.hash(id, name, password, surname, department, salary, roles);
     }
 
-    public void updateFrom(Employee employee, BCryptPasswordEncoder encoder) {
-        this.name = employee.getName();
-        this.surname = employee.getSurname();
-        this.department = employee.getDepartment();
-        this.salary = employee.getSalary();
-        this.password = employee.getPassword();
-
-    }
 }

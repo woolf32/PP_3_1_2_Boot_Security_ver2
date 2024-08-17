@@ -46,12 +46,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public void save(Employee employee) {
         employee.setPassword(bCryptPasswordEncoder.encode(employee.getPassword()));
-        Set<Role> detachedRoles = employee.getRoles();
-        Set<Role> attachedRoles = new HashSet<>();
-        for (Role role : detachedRoles) {
-            attachedRoles.add(roleRepository.findById(role.getId()).orElse(null));
-        }
-        employee.setRoles(attachedRoles);
         employeeRepository.save(employee);
     }
 
@@ -60,12 +54,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void update(Employee employee ) {
         Employee savedEmployee = employeeRepository.findById(employee.getId()).orElseThrow(() ->
                 new RuntimeException("Employee not found with id: " + employee.getId()));
-       savedEmployee.updateFrom(employee,bCryptPasswordEncoder);
-        Set<Role> updatedRoles  = new HashSet<>();
-        for (Role role : employee.getRoles()) {
-            updatedRoles.add(roleRepository.findById(role.getId()).orElse(null));
-        }
-        savedEmployee.setRoles(updatedRoles);
+        employee.setPassword(bCryptPasswordEncoder.encode(employee.getPassword()));
         employeeRepository.save(savedEmployee);
 
     }
