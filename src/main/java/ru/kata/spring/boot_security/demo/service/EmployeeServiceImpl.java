@@ -55,9 +55,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee savedEmployee = employeeRepository.findById(employee.getId()).orElseThrow(() ->
                 new RuntimeException("Employee not found with id: " + employee.getId()));
         employee.setPassword(bCryptPasswordEncoder.encode(employee.getPassword()));
-        employeeRepository.save(savedEmployee);
+        employeeRepository.save(employee);
 
     }
+
 
     @Transactional
     @Override
