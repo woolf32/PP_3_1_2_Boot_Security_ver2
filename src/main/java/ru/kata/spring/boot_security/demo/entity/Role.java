@@ -59,6 +59,11 @@ public class Role implements GrantedAuthority {
         this.name = name;
     }
 
+    public String getRoleNameWithoutRole() {
+        /*return name.substring(5);*/
+        return name;
+    }
+
     @Override
     public String getAuthority() {
         return getName();

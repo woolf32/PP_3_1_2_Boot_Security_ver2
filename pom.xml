@@ -67,6 +67,18 @@
 			<optional>true</optional>
 		</dependency>
 
+		<dependency>
+			<groupId>jakarta.annotation</groupId>
+			<artifactId>jakarta.annotation-api</artifactId>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-taglibs -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-taglibs</artifactId>
+			<version>5.3.13.RELEASE</version>
+		</dependency>
+
+
 	</dependencies>
 	<build>
 		<plugins>
