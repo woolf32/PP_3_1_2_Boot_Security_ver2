@@ -1,6 +1,8 @@
 package ru.kata.spring.boot_security.demo.controllers;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,7 +17,7 @@ import ru.kata.spring.boot_security.demo.service.RoleService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/admin")
+@RequestMapping("api/admin")
 //@CrossOrigin(origins = "http://localhost:63343")
 public class AdminRestController {
 
@@ -28,31 +30,34 @@ public class AdminRestController {
     }
 
     @GetMapping()
-    public List <Employee> getUsers() {
-        return employeeService.showAllEmployee();
+    public ResponseEntity <List <Employee> > getUsers() {
+
+        return ResponseEntity.ok(employeeService.showAllEmployee());
+    }
+
+    @PostMapping()
+    public ResponseEntity<Void> saveUser(@RequestBody Employee employee) {
+        employeeService.save(employee);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/{id}")
-    public Employee getEmployeeById(@PathVariable int id) {
-        Employee employee = employeeService.getEmployeeById(id);
-        return employee;
+    public ResponseEntity<Employee> getUser (@PathVariable("id") int id) {
+        return ResponseEntity.ok(employeeService.getEmployeeById(id));
     }
 
-    @PostMapping("/new")
-    public Employee create(@RequestBody Employee employee) {
-        employeeService.save(employee);
-        return employee;
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete (@PathVariable("id") int id) {
+        employeeService.delete(id);
+        return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/edit/{id}")
-    public Employee update(@PathVariable int id, @RequestBody Employee employee) {
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> update(@PathVariable int id, @RequestBody Employee employee) {
         employee.setId(id);
         employeeService.update(employee);
-        return employee;
+        return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/delete/{id}")
-    public void delete(@PathVariable int id) {
-        employeeService.delete(id);
-    }
+
 }

@@ -2,12 +2,17 @@ document.addEventListener('DOMContentLoaded', function () {
     loadUsers();
 });
 
+// загрузка всех пользователей
 function loadUsers() {
-    fetch('http://localhost:8080/api/admin')
+    fetch('http://localhost:8080/api/admin', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
         .then(response => response.json())
         .then(data => {
-            const tbody = document.querySelector('#users-table tbody');
-            tbody.innerHTML = '';
+            const table = document.getElementById('users-table-body');
             data.forEach(employee => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
@@ -25,7 +30,7 @@ function loadUsers() {
                         <button class="btn btn-danger btn-sm" onclick="openDeleteModal(${employee.id})">Delete</button>
                     </td>
                 `;
-                tbody.appendChild(tr);
+                table.appendChild(tr);
             });
         });
 }
@@ -68,7 +73,6 @@ function openEditModal(id) {
 document.getElementById('editUserForm').addEventListener('submit', function (e) {
     e.preventDefault();
     const id = document.getElementById('editUserId').value;
-    const password = document.getElementById('editPassword').value || null;
 
     const employee = {
         name: document.getElementById('editName').value,
@@ -76,17 +80,17 @@ document.getElementById('editUserForm').addEventListener('submit', function (e) 
         password: document.getElementById('editPassword').value,
         salary: document.getElementById('editSalary').value,
         department: document.getElementById('editDepartment').value,
-        roles: [...document.querySelectorAll('#editUserModal input[type=checkbox]:checked')].map(cb => ({id: cb.value}))
+        roles: [...document.querySelectorAll('#editUserModal input[type=checkbox]:checked')].map(cb => ({id: cb.value, name: cb.dataset.name}))
     };
 
-    fetch(`http://localhost:8080/api/admin/edit/${id}`, {
+    fetch(`http://localhost:8080/api/admin/${id}`, {
         method: 'PUT',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(employee)
     })
         .then(response => {
             if (!response.ok) {
-                throw new Error('Ошибка при редактировании пользователя');
+                throw new Error('Ошибка при редактировании пользователя!');
             }
             return response.json();
         })
@@ -96,7 +100,7 @@ document.getElementById('editUserForm').addEventListener('submit', function (e) 
         })
         .catch(error => {
             console.error('Произошла ошибка:', error);
-            alert('Произошла ошибка при обновлении пользователя');
+            alert('Произошла ошибка при обновлении пользователя!');
         });});
 
 document.getElementById('newUserForm').addEventListener('submit', function (e) {
@@ -117,7 +121,7 @@ document.getElementById('newUserForm').addEventListener('submit', function (e) {
         body: JSON.stringify(employee)
     })
         .then(response => response.json())
-        .then(data => {
+        .then(() => {
             loadUsers();
             document.getElementById('newUserForm').reset();
             new bootstrap.Modal(document.getElementById('newUserModal')).hide();
