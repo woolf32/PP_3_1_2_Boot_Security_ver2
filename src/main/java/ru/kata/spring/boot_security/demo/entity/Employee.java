@@ -1,6 +1,7 @@
 package ru.kata.spring.boot_security.demo.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -125,6 +126,7 @@ public class Employee implements UserDetails {
         this.roles = roles;
     }
 
+    @JsonIgnore
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<Role> roles = getRoles();
@@ -176,5 +178,6 @@ public class Employee implements UserDetails {
     public int hashCode() {
         return Objects.hash(id, name, password, surname, department, salary, roles);
     }
+
 
 }

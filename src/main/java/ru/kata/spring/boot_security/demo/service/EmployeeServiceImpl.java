@@ -54,11 +54,29 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Transactional
     @Override
     public void update(Employee employee) {
-        Employee savedEmployee = employeeRepository.findById(employee.getId()).orElseThrow(() ->
-                new RuntimeException("Employee not found with id: " + employee.getId()));
-        employee.setPassword(bCryptPasswordEncoder.encode(employee.getPassword()));
-        employeeRepository.save(employee);
+        // Находим пользователя по ID
+        Employee savedEmployee = employeeRepository.findById(employee.getId())
+                .orElseThrow(() -> new RuntimeException("Employee not found with id: " + employee.getId()));
+
+        // Обновляем пароль, если он был передан
+        if (employee.getPassword() != null && !employee.getPassword().isEmpty()) {
+            savedEmployee.setPassword(bCryptPasswordEncoder.encode(employee.getPassword()));
+        }
+
+        // Обновляем основные данные
+        savedEmployee.setName(employee.getName());
+        savedEmployee.setSurname(employee.getSurname());
+        savedEmployee.setSalary(employee.getSalary());
+        savedEmployee.setDepartment(employee.getDepartment());
+
+        // Обновляем роли. Получаем роли с фронта и добавляем их
+        savedEmployee.getRoles().clear();
+        savedEmployee.getRoles().addAll(employee.getRoles());
+
+        // Сохраняем обновленного пользователя
+        employeeRepository.save(savedEmployee);
     }
+
 
     @Transactional
     @Override
