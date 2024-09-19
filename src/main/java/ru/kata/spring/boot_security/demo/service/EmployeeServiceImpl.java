@@ -69,13 +69,22 @@ public class EmployeeServiceImpl implements EmployeeService {
         savedEmployee.setSalary(employee.getSalary());
         savedEmployee.setDepartment(employee.getDepartment());
 
-        // Обновляем роли. Получаем роли с фронта и добавляем их
-        savedEmployee.getRoles().clear();
-        savedEmployee.getRoles().addAll(employee.getRoles());
+        // Инициализируем ленивую коллекцию ролей
+        savedEmployee.getRoles().size(); // Инициализация ленивой коллекции
+
+        // Обновляем роли, полученные с фронта
+        if (employee.getRoles() != null) {
+            // Удаляем старые роли
+            savedEmployee.getRoles().clear();
+
+            // Добавляем новые роли из запроса
+            savedEmployee.getRoles().addAll(employee.getRoles());
+        }
 
         // Сохраняем обновленного пользователя
         employeeRepository.save(savedEmployee);
     }
+
 
 
     @Transactional

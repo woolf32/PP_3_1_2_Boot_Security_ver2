@@ -53,9 +53,7 @@ public class Employee implements UserDetails {
     @Column(name = "salary")
     private int salary;
 
-    @ManyToMany(fetch = FetchType.LAZY,cascade = {CascadeType.MERGE})
-    @Fetch(FetchMode.JOIN)
-    @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
