@@ -53,37 +53,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Transactional
     @Override
-    public Employee update(Employee employee) {
-        System.out.println("Updating employee: " + employee); // Добавьте лог
-
-        Employee employee1 = employeeRepository.findById(employee.getId())
-                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + employee.getId()));
-
-        // Логируйте роли
-        System.out.println("Received roles: " + employee1.getRoles());
-
-        Set<Role> roles = new HashSet<>();
-        for (Role role : employee.getRoles()) {
-            Role existingRole = roleRepository.findRoleByid(role.getId()); // Проверка роли по ID
-            if (existingRole != null) {
-                roles.add(existingRole);
-            } else {
-                if (role.getName() == null) {
-                    throw new IllegalArgumentException("Role name cannot be null for role ID: " + role.getId());
-                }
-                roles.add(role); // Добавляем новую роль с именем
-            }
-        }
-        employee1.setRoles(roles);
-
-        if (!employee.getPassword().isEmpty() && !employee.getPassword().equals(employee1.getPassword())) {
-            employee1.setPassword(bCryptPasswordEncoder.encode(employee.getPassword()));
-        }
-
-
-        System.out.println("Employee updated: " + employee1); // Логируем обновлённого пользователя
-
-        return employeeRepository.save(employee1);
+    public void update(Employee employee) {
+        Employee savedEmployee = employeeRepository.findById(employee.getId()).orElseThrow(() ->
+                new RuntimeException("Employee not found with id: " + employee.getId()));
+        employee.setPassword(bCryptPasswordEncoder.encode(employee.getPassword()));
+        employeeRepository.save(employee);
     }
 
     @Transactional
