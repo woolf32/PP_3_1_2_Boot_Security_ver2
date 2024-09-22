@@ -18,7 +18,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/admin")
-//@CrossOrigin(origins = "http://localhost:63343")
 public class AdminRestController {
 
     private final EmployeeService employeeService;
