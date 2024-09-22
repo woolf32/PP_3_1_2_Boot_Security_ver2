@@ -1,6 +1,5 @@
 package ru.kata.spring.boot_security.demo.service;
 
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,8 +50,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Transactional
     @Override
     public void update(Employee employee ) {
-        Employee savedEmployee = employeeRepository.findById(employee.getId()).orElseThrow(() ->
-                new RuntimeException("Employee not found with id: " + employee.getId()));
         employee.setPassword(bCryptPasswordEncoder.encode(employee.getPassword()));
         employeeRepository.save(employee);
 
@@ -66,10 +63,5 @@ public class EmployeeServiceImpl implements EmployeeService {
         employeeRepository.deleteById(id);
     }
 
-    @Transactional
-    @Override
-    public Employee getAuthenticationPrincipal( @AuthenticationPrincipal Employee employee) {
-        return employee;
-    }
 
 }

@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.kata.spring.boot_security.demo.entity.Employee;
 import ru.kata.spring.boot_security.demo.entity.Role;
-import ru.kata.spring.boot_security.demo.service.EmployeeService;
 import ru.kata.spring.boot_security.demo.service.RoleService;
 
 import java.util.List;
@@ -16,11 +15,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/employees")
 public class UserRestController {
-    private final EmployeeService employeeService;
     private final RoleService roleService;
 
-    public UserRestController(EmployeeService employeeService, RoleService roleService) {
-        this.employeeService = employeeService;
+    public UserRestController(RoleService roleService) {
         this.roleService = roleService;
     }
 

@@ -15,6 +15,4 @@ public interface EmployeeService {
     void update(Employee employee);
 
     void delete(int id);
-
-    Employee getAuthenticationPrincipal (@AuthenticationPrincipal Employee employee);
 }

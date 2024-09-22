@@ -113,8 +113,9 @@ document.getElementById('editUserForm').addEventListener('submit', function (e) 
         })
         .then(data => {
             loadUsers();
-            document.getElementById('editUserModal').hide();
-            new bootstrap.Modal(document.getElementById('editUserModal')).hide();
+            //закрытия окна после редактирования
+            const modal = bootstrap.Modal.getInstance(document.getElementById(`editUserModal`));
+            modal.hide();
         })
         .catch(error => {
             console.error('Произошла ошибка:', error);
